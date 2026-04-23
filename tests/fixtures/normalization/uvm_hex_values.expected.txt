@@ -1,0 +1,1 @@
+UVM_ERROR @ <TIME>: uvm_test_top [SCB] Expected <HEX> got <HEX> in transaction

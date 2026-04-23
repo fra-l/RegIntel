@@ -1,0 +1,12 @@
+{
+  "description": "Same SVA assertion failure at different simulation times — should map to the same signature",
+  "severity": "error",
+  "file": "sva_checkers.sv",
+  "line": 27,
+  "extractor_keys": ["prop_grant_valid"],
+  "variants": [
+    "Assertion failed for property prop_grant_valid at time 12345ns",
+    "Assertion failed for property prop_grant_valid at time 99999ns",
+    "Assertion failed for property prop_grant_valid at time 1ms"
+  ]
+}

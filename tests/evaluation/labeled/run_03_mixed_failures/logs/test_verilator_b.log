@@ -1,0 +1,2 @@
+%Error: my_module.sv:42:5: Can't find definition of task 'do_reset'
+        my_module.sv:42:5: ... note: In instance 'top.dut'

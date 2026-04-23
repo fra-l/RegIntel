@@ -1,0 +1,6 @@
+Simulation starting...
+"sva_checkers.sv", line 27: Assertion failed for property prop_grant_valid
+  at time 12345ns
+"sva_checkers.sv", line 55: Assertion failed for property prop_no_double_grant
+  at time 99999ns
+Simulation ended with errors.

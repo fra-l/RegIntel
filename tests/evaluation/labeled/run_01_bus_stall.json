@@ -1,0 +1,16 @@
+{
+  "description": "Bus stall regression — 4 tests share one root cause, 2 share another",
+  "manifest_path": "run_01_bus_stall/manifest.json",
+  "ground_truth_clusters": [
+    {
+      "label": "bus_stall_bug",
+      "description": "AXI bus arbitration stall — all failures caused by the same driver bug",
+      "member_test_names": ["test_bus_a", "test_bus_b", "test_bus_c", "test_bus_d"]
+    },
+    {
+      "label": "scoreboard_mismatch",
+      "description": "AXI scoreboard data mismatch — two tests exposed the same scoreboard bug",
+      "member_test_names": ["test_scb_a", "test_scb_b"]
+    }
+  ]
+}

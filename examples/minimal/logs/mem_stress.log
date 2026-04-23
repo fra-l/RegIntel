@@ -1,0 +1,2 @@
+UVM_INFO @ 100ns: uvm_test_top [TOP] Starting mem_stress
+UVM_INFO @ 2400ns: uvm_test_top [TOP] mem_stress PASSED

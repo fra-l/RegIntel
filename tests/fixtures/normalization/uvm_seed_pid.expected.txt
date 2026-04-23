@@ -1,0 +1,1 @@
+UVM_ERROR @ <TIME>: [ENV] Simulation failed seed=<N> pid=<N> host=<HOST>

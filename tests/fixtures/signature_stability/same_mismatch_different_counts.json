@@ -1,0 +1,12 @@
+{
+  "description": "Same scoreboard MISMATCH with different transaction counts — should map to the same signature",
+  "severity": "error",
+  "file": "scoreboard.sv",
+  "line": 89,
+  "extractor_keys": ["uvm_test_top.env.axi_sb"],
+  "variants": [
+    "UVM_ERROR @ 100ns: [SCB] MISMATCH in queue 'payload_q': expected 42 items got 41",
+    "UVM_ERROR @ 200ns: [SCB] MISMATCH in queue 'payload_q': expected 7 items got 6",
+    "UVM_ERROR @ 300ns: [SCB] MISMATCH in queue 'payload_q': expected 99 items got 98"
+  ]
+}

@@ -1,0 +1,1 @@
+%Error: my_module.sv:100:5: Can't find definition of task 'do_reset'

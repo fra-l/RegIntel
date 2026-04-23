@@ -1,0 +1,2 @@
+UVM_INFO @ 100ns: uvm_test_top [TOP] Starting axi_stress
+UVM_INFO @ 1200ns: uvm_test_top [TOP] axi_stress PASSED

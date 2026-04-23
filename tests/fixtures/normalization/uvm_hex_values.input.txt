@@ -1,0 +1,1 @@
+UVM_ERROR @ 100ns: uvm_test_top [SCB] Expected 0xDEADBEEF got 0x12345678 in transaction

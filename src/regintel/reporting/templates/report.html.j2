@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RegIntel Report · {{ stats.total_failures }} failures · {{ stats.total_clusters }} clusters</title>
+<style>
+:root {
+  --bg: #f8f9fa;
+  --surface: #ffffff;
+  --surface2: #f1f3f5;
+  --border: #dee2e6;
+  --text: #212529;
+  --text-muted: #6c757d;
+  --accent: #0d6efd;
+  --success: #198754;
+  --warning: #e67700;
+  --danger: #c92a2a;
+  --mono: "SF Mono", Monaco, "Cascadia Code", "Consolas", monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --radius: 6px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1b26;
+    --surface: #24283b;
+    --surface2: #292e42;
+    --border: #3b4261;
+    --text: #cdd6f4;
+    --text-muted: #9aa5ce;
+    --accent: #7aa2f7;
+    --success: #9ece6a;
+    --warning: #e0af68;
+    --danger: #f7768e;
+  }
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; }
+a { color: var(--accent); }
+code, .mono { font-family: var(--mono); }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 24px 16px; }
+
+header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 20px 0; margin-bottom: 24px; }
+header .container { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+.brand { font-size: 22px; font-weight: 700; color: var(--accent); letter-spacing: -0.5px; }
+.headline { font-size: 20px; font-weight: 600; }
+.headline .arrow { color: var(--text-muted); margin: 0 6px; }
+.header-meta { font-size: 12px; color: var(--text-muted); margin-left: auto; }
+
+.summary-strip { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 20px; min-width: 100px; text-align: center; }
+.stat-card .value { font-size: 28px; font-weight: 700; line-height: 1; }
+.stat-card .label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+.stat-card.failures .value { color: var(--danger); }
+.stat-card.clusters .value { color: var(--accent); }
+
+.search-row { margin-bottom: 20px; }
+#search { width: 100%; max-width: 420px; padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--text); font-size: 14px; outline: none; }
+#search:focus { border-color: var(--accent); }
+
+.section-title { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+.cluster-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 32px; }
+
+details.cluster-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+details.cluster-card[open] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+details.cluster-card > summary { list-style: none; cursor: pointer; padding: 10px 14px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+details.cluster-card > summary::-webkit-details-marker { display: none; }
+details.cluster-card > summary::before { content: "▶"; font-size: 9px; color: var(--text-muted); transition: transform 0.15s; flex-shrink: 0; }
+details.cluster-card[open] > summary::before { transform: rotate(90deg); }
+details.cluster-card > summary:hover { background: var(--surface2); }
+
+.cluster-rank { font-size: 11px; color: var(--text-muted); min-width: 26px; }
+.cluster-rep { flex: 1; font-family: var(--mono); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.size-badge { background: var(--surface2); border: 1px solid var(--border); border-radius: 999px; padding: 1px 8px; font-size: 11px; white-space: nowrap; flex-shrink: 0; }
+.conf-pill { border-radius: 999px; padding: 1px 8px; font-size: 11px; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+.conf-pill.high { background: #d3f9d8; color: #2b8a3e; border: 1px solid #8ce99a; }
+.conf-pill.medium { background: #fff3bf; color: #e67700; border: 1px solid #ffd43b; }
+.conf-pill.low { background: #ffe8cc; color: #c92a2a; border: 1px solid #ffa94d; }
+@media (prefers-color-scheme: dark) {
+  .conf-pill.high { background: #1a3326; color: #9ece6a; border-color: #2d6a38; }
+  .conf-pill.medium { background: #3d2e00; color: #e0af68; border-color: #6d5200; }
+  .conf-pill.low { background: #3d1a1a; color: #f7768e; border-color: #6d2020; }
+}
+.tier-badge { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 3px; background: var(--surface2); color: var(--text-muted); border: 1px solid var(--border); }
+.tier-badge.fuzzy { color: var(--warning); border-color: var(--warning); }
+
+.cluster-body { padding: 0 14px 14px; border-top: 1px solid var(--border); }
+.cluster-meta { display: grid; grid-template-columns: max-content 1fr; gap: 3px 14px; margin: 10px 0; font-size: 12px; }
+.cluster-meta .mk { color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px; }
+.failures-title { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.4px; margin: 10px 0 6px; }
+
+details.failure-item { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 5px; font-size: 12px; }
+details.failure-item > summary { list-style: none; cursor: pointer; padding: 6px 10px; display: flex; align-items: center; gap: 8px; }
+details.failure-item > summary::-webkit-details-marker { display: none; }
+details.failure-item > summary::before { content: "▶"; font-size: 8px; color: var(--text-muted); transition: transform 0.15s; }
+details.failure-item[open] > summary::before { transform: rotate(90deg); }
+details.failure-item > summary:hover { background: var(--surface2); }
+.fail-test { font-weight: 600; }
+.fail-seed { color: var(--text-muted); font-size: 11px; }
+.fail-loc { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+
+pre.log-block { background: #1e1e2e; color: #cdd6f4; font-family: var(--mono); font-size: 11px; line-height: 1.6; padding: 10px 12px; overflow-x: auto; }
+.ctx-line { opacity: 0.45; display: block; }
+.primary-line { color: #f7768e; font-weight: 700; display: block; }
+
+.flaky-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 32px; }
+.flaky-table th { text-align: left; padding: 6px 10px; color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; border-bottom: 1px solid var(--border); }
+.flaky-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+.flaky-bar-wrap { display: inline-flex; align-items: center; gap: 6px; }
+.flaky-bar { width: 72px; height: 5px; background: var(--surface2); border-radius: 3px; overflow: hidden; display: inline-block; vertical-align: middle; }
+.flaky-bar-fill { height: 100%; background: var(--warning); border-radius: 3px; display: block; }
+
+footer { border-top: 1px solid var(--border); padding-top: 14px; margin-top: 8px; font-size: 12px; color: var(--text-muted); }
+details.meta-details > summary { list-style: none; cursor: pointer; font-weight: 600; margin-bottom: 8px; font-size: 13px; }
+details.meta-details > summary::-webkit-details-marker { display: none; }
+.meta-grid { display: grid; grid-template-columns: max-content 1fr; gap: 4px 16px; margin-top: 6px; }
+.meta-grid .mk { color: var(--text-muted); }
+
+@media print {
+  details.cluster-card, details.failure-item { display: block; }
+  .cluster-body { display: block !important; }
+  .search-row { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <span class="brand">RegIntel</span>
+    <span class="headline">
+      {{ stats.total_failures }} failure{{ 's' if stats.total_failures != 1 else '' }}
+      <span class="arrow">→</span>
+      {{ stats.total_clusters }} cluster{{ 's' if stats.total_clusters != 1 else '' }}
+    </span>
+    <span class="header-meta">v{{ tool_version }} · {{ generated_at }}</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="summary-strip">
+    <div class="stat-card"><div class="value">{{ stats.total_tests }}</div><div class="label">Tests</div></div>
+    <div class="stat-card failures"><div class="value">{{ stats.total_failures }}</div><div class="label">Failures</div></div>
+    <div class="stat-card clusters"><div class="value">{{ stats.total_clusters }}</div><div class="label">Clusters</div></div>
+    {% if report.flaky_tests %}<div class="stat-card"><div class="value">{{ report.flaky_tests|length }}</div><div class="label">Flaky</div></div>{% endif %}
+    <div class="stat-card"><div class="value">{{ "%.1f"|format(stats.analysis_duration_s) }}s</div><div class="label">Duration</div></div>
+  </div>
+
+  <div class="search-row">
+    <input type="text" id="search" placeholder="Filter clusters…" aria-label="Search clusters">
+  </div>
+
+  <p class="section-title">Clusters ({{ cluster_views|length }})</p>
+  <div class="cluster-list" id="cluster-list">
+  {% for cv in cluster_views %}
+    <details class="cluster-card" id="cluster-{{ cv.rank }}" data-rep="{{ cv.full_rep|lower }}">
+      <summary>
+        <span class="cluster-rank">#{{ cv.rank }}</span>
+        <span class="cluster-rep" title="{{ cv.full_rep }}">{{ cv.truncated_rep }}</span>
+        <span class="size-badge">{{ cv.size }} failure{{ 's' if cv.size != 1 else '' }}</span>
+        <span class="conf-pill {{ cv.confidence_band }}">{{ "%.0f"|format(cv.confidence * 100) }}%</span>
+        <span class="tier-badge{% if cv.tier == 3 %} fuzzy{% endif %}">T{{ cv.tier }}{% if cv.tier == 3 %} FUZZY{% endif %}</span>
+      </summary>
+      <div class="cluster-body">
+        <div class="cluster-meta">
+          <span class="mk">Location</span><span>{{ cv.location_display }}</span>
+          <span class="mk">Method</span><span>{{ cv.clustering_method }}</span>
+          {% if cv.extractor_keys %}<span class="mk">Keys</span><span class="mono">{{ cv.extractor_keys|join(", ") }}</span>{% endif %}
+          <span class="mk">Tests</span><span>{{ cv.test_summary }}</span>
+        </div>
+        <p class="failures-title">Failures ({{ cv.size }})</p>
+        {% for fv in cv.member_failures %}
+        <details class="failure-item">
+          <summary>
+            <span class="fail-test">{{ fv.test_name }}</span>
+            {% if fv.seed is not none %}<span class="fail-seed">seed={{ fv.seed }}</span>{% endif %}
+            <span class="fail-loc">{{ fv.log_path }}:{{ fv.log_line }}</span>
+          </summary>
+<pre class="log-block">{% for line in fv.context_before %}<span class="ctx-line">{{ line }}</span>
+{% endfor %}<span class="primary-line">{{ fv.primary_line }}</span>
+{% for line in fv.context_after %}<span class="ctx-line">{{ line }}</span>
+{% endfor %}</pre>
+        </details>
+        {% endfor %}
+      </div>
+    </details>
+  {% else %}
+    <p style="color:var(--text-muted);padding:16px 0">No failures found.</p>
+  {% endfor %}
+  </div>
+
+  {% if report.flaky_tests %}
+  <p class="section-title">Flaky Tests</p>
+  <table class="flaky-table">
+    <thead><tr><th>Test</th><th>Failures</th><th>Runs</th><th>Score</th></tr></thead>
+    <tbody>
+    {% for ft in report.flaky_tests %}
+      <tr>
+        <td>{{ ft.test_name }}</td>
+        <td>{{ ft.failures }}</td>
+        <td>{{ ft.total_runs }}</td>
+        <td>
+          <span class="flaky-bar-wrap">
+            <span class="flaky-bar"><span class="flaky-bar-fill" style="width:{{ (ft.flaky_score * 100)|int }}%"></span></span>
+            {{ "%.0f"|format(ft.flaky_score * 100) }}%
+          </span>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  <footer>
+    <details class="meta-details">
+      <summary>Analysis Metadata</summary>
+      <div class="meta-grid">
+        <span class="mk">Report ID</span><span class="mono">{{ report.report_id }}</span>
+        <span class="mk">Tool version</span><span>{{ report.tool_version }}</span>
+        <span class="mk">Manifest</span><span class="mono">{{ manifest_path }}</span>
+        <span class="mk">Tier 1 clusters</span><span>{{ stats.tier1_clusters }}</span>
+        <span class="mk">Tier 2 merges</span><span>{{ stats.tier2_merges }}</span>
+        <span class="mk">Tier 3 merges</span><span>{{ stats.tier3_merges }}</span>
+        <span class="mk">Duration</span><span>{{ stats.analysis_duration_s }}s</span>
+      </div>
+    </details>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var inp=document.getElementById('search');
+  if(!inp)return;
+  inp.addEventListener('input',function(){
+    var q=inp.value.toLowerCase().trim();
+    document.querySelectorAll('.cluster-card').forEach(function(c){
+      c.style.display=(!q||c.dataset.rep.includes(q)||c.textContent.toLowerCase().includes(q))?'':'none';
+    });
+  });
+})();
+</script>
+</body>
+</html>

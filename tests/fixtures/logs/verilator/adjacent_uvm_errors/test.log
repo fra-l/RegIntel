@@ -1,0 +1,4 @@
+UVM_INFO @ 100ns: uvm_test_top [TOP] Starting simulation
+UVM_ERROR @ 12345ns: uvm_test_top.env.driver [DRV] Bus stalled waiting for grant
+UVM_ERROR @ 12346ns: uvm_test_top.env.driver [DRV] Timeout waiting for response
+UVM_INFO @ 12347ns: uvm_test_top [TOP] Simulation ending

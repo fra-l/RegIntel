@@ -1,0 +1,13 @@
+{
+  "simulator": "verilator",
+  "timestamp": "2026-04-23T10:00:00Z",
+  "project": "eval_run_03",
+  "tests": [
+    {"test_name": "test_sva_a",       "seed": 1, "status": "fail", "duration_s": 0.5, "log_path": "logs/test_sva_a.log"},
+    {"test_name": "test_sva_b",       "seed": 2, "status": "fail", "duration_s": 0.6, "log_path": "logs/test_sva_b.log"},
+    {"test_name": "test_uvm_a",       "seed": 3, "status": "fail", "duration_s": 1.2, "log_path": "logs/test_uvm_a.log"},
+    {"test_name": "test_uvm_b",       "seed": 4, "status": "fail", "duration_s": 1.1, "log_path": "logs/test_uvm_b.log"},
+    {"test_name": "test_verilator_a", "seed": 5, "status": "fail", "duration_s": 0.3, "log_path": "logs/test_verilator_a.log"},
+    {"test_name": "test_verilator_b", "seed": 6, "status": "fail", "duration_s": 0.4, "log_path": "logs/test_verilator_b.log"}
+  ]
+}

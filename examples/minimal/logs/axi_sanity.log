@@ -1,0 +1,2 @@
+UVM_INFO @ 100ns: uvm_test_top [TOP] Starting axi_sanity
+UVM_INFO @ 500ns: uvm_test_top [TOP] axi_sanity PASSED

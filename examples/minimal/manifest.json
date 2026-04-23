@@ -1,0 +1,12 @@
+{
+  "simulator": "verilator",
+  "timestamp": "2026-04-23T10:00:00Z",
+  "project": "minimal_demo",
+  "tests": [
+    {"test_name": "axi_sanity",  "seed": 1,  "status": "pass", "duration_s": 0.4, "log_path": "logs/axi_sanity.log"},
+    {"test_name": "axi_stress",  "seed": 2,  "status": "pass", "duration_s": 1.1, "log_path": "logs/axi_stress.log"},
+    {"test_name": "axi_corner",  "seed": 3,  "status": "fail", "duration_s": 0.9, "log_path": "logs/axi_corner.log"},
+    {"test_name": "mem_basic",   "seed": 4,  "status": "fail", "duration_s": 0.6, "log_path": "logs/mem_basic.log"},
+    {"test_name": "mem_stress",  "seed": 5,  "status": "pass", "duration_s": 2.3, "log_path": "logs/mem_stress.log"}
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "simulator": "verilator",
+  "timestamp": "2026-04-23T10:00:00Z",
+  "project": "minimal",
+  "tests": [
+    {
+      "test_name": "passing_test",
+      "seed": 1,
+      "status": "pass",
+      "duration_s": 0.5,
+      "log_path": "../logs/verilator/simple_uvm_error/passing_test.log"
+    },
+    {
+      "test_name": "failing_test_a",
+      "seed": 42,
+      "status": "fail",
+      "duration_s": 1.2,
+      "log_path": "../logs/verilator/simple_uvm_error/test.log"
+    }
+  ]
+}

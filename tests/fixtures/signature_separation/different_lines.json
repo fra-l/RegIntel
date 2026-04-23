@@ -1,0 +1,11 @@
+{
+  "description": "Same file and message but different source lines — must produce different signatures",
+  "severity": "error",
+  "file": "scoreboard.sv",
+  "extractor_keys": [],
+  "variants": [
+    {"line": 42,  "message": "MISMATCH in queue payload_q"},
+    {"line": 89,  "message": "MISMATCH in queue payload_q"},
+    {"line": 120, "message": "MISMATCH in queue payload_q"}
+  ]
+}

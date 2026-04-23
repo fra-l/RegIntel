@@ -1,0 +1,11 @@
+{
+  "simulator": "verilator",
+  "timestamp": "2026-04-23T09:00:00Z",
+  "project": "eval_run_02",
+  "tests": [
+    {"test_name": "test_axi_a", "seed": 1, "status": "fail", "duration_s": 1.0, "log_path": "logs/test_axi_a.log"},
+    {"test_name": "test_axi_b", "seed": 2, "status": "fail", "duration_s": 1.1, "log_path": "logs/test_axi_b.log"},
+    {"test_name": "test_mem_a", "seed": 3, "status": "fail", "duration_s": 0.9, "log_path": "logs/test_mem_a.log"},
+    {"test_name": "test_mem_b", "seed": 4, "status": "fail", "duration_s": 0.8, "log_path": "logs/test_mem_b.log"}
+  ]
+}

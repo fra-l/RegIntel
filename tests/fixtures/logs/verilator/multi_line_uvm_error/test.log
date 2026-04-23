@@ -1,0 +1,6 @@
+UVM_INFO @ 100ns: uvm_test_top [TOP] Starting simulation
+UVM_ERROR my_driver.sv(42) @ 12345ns: uvm_test_top.env.driver [DRV] Bus stalled waiting for grant
+  Arbiter state: IDLE
+  Last transaction: addr=0xDEAD data=0xBEEF
+  Grant signal held low for 1000 cycles
+UVM_INFO @ 12346ns: uvm_test_top [TOP] Simulation ending

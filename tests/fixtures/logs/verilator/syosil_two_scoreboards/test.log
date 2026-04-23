@@ -1,0 +1,8 @@
+UVM_INFO @ 100ns: uvm_test_top [TOP] Starting simulation
+UVM_ERROR @ 12345ns: uvm_test_top.env.axi_sb [SCB] MISMATCH in queue 'payload_q'
+  Expected: data=0xDEADBEEF ctrl=0x1
+  Got:      data=0x12345678 ctrl=0x0
+UVM_ERROR @ 12346ns: uvm_test_top.env.mem_sb [SCB] MISMATCH in queue 'payload_q'
+  Expected: data=0xCAFEBABE ctrl=0x1
+  Got:      data=0xDEADDEAD ctrl=0x0
+UVM_INFO @ 12347ns: uvm_test_top [TOP] Simulation ending

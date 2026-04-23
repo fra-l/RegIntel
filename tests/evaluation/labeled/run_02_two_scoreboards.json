@@ -1,0 +1,16 @@
+{
+  "description": "SyoSil two scoreboards — same queue name but different instances must not merge",
+  "manifest_path": "run_02_two_scoreboards/manifest.json",
+  "ground_truth_clusters": [
+    {
+      "label": "axi_scoreboard_mismatch",
+      "description": "AXI scoreboard (uvm_test_top.env.axi_sb) data mismatch in payload_q",
+      "member_test_names": ["test_axi_a", "test_axi_b"]
+    },
+    {
+      "label": "mem_scoreboard_mismatch",
+      "description": "MEM scoreboard (uvm_test_top.env.mem_sb) data mismatch in payload_q",
+      "member_test_names": ["test_mem_a", "test_mem_b"]
+    }
+  ]
+}

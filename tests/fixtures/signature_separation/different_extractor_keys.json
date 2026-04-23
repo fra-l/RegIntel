@@ -1,0 +1,11 @@
+{
+  "description": "Same normalized message but different extractor_keys (scoreboard instances) — must produce different signatures. This is the SyoSil two-scoreboards regression.",
+  "severity": "error",
+  "file": "scoreboard.sv",
+  "line": 89,
+  "variants": [
+    {"extractor_keys": ["uvm_test_top.env.axi_sb"],  "message": "MISMATCH in queue payload_q"},
+    {"extractor_keys": ["uvm_test_top.env.mem_sb"],  "message": "MISMATCH in queue payload_q"},
+    {"extractor_keys": ["uvm_test_top.env.apb_sb"],  "message": "MISMATCH in queue payload_q"}
+  ]
+}

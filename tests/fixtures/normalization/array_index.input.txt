@@ -1,0 +1,1 @@
+UVM_ERROR @ 100ns: [MEM] Access to mem_array[1024] out of bounds, size=256

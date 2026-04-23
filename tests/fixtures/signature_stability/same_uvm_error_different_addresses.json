@@ -1,0 +1,12 @@
+{
+  "description": "Same UVM error with different hex addresses — should map to the same signature",
+  "severity": "error",
+  "file": "my_driver.sv",
+  "line": 42,
+  "extractor_keys": [],
+  "variants": [
+    "UVM_ERROR @ 100ns: uvm_test_top [DRV] Bus stalled, addr=0xDEADBEEF",
+    "UVM_ERROR @ 200ns: uvm_test_top [DRV] Bus stalled, addr=0x12345678",
+    "UVM_ERROR @ 99999ns: uvm_test_top [DRV] Bus stalled, addr=0xCAFEBABE"
+  ]
+}

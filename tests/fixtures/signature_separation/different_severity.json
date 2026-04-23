@@ -1,0 +1,11 @@
+{
+  "description": "Same message text but different severity — must produce different signatures",
+  "file": "my_driver.sv",
+  "line": 42,
+  "extractor_keys": [],
+  "variants": [
+    {"severity": "error",   "message": "Bus stalled waiting for grant"},
+    {"severity": "fatal",   "message": "Bus stalled waiting for grant"},
+    {"severity": "warning", "message": "Bus stalled waiting for grant"}
+  ]
+}

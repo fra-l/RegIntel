@@ -1,0 +1,1 @@
+[31mUVM_ERROR[0m my_driver.sv(42) @ 100ns: [DRV] Bus error detected

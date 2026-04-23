@@ -1,0 +1,4 @@
+%Error: my_module.sv:42:5: Can't find definition of task 'do_reset'
+        my_module.sv:42:5: ... note: In instance 'top.dut'
+%Warning-UNUSED: my_module.sv:10:3: Signal is not used: 'unused_wire'
+                 my_module.sv:10:3: ... Suggest use /*verilator lint_off UNUSED*/

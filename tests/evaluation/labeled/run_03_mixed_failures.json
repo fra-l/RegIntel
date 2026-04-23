@@ -1,0 +1,21 @@
+{
+  "description": "Mixed failure types — SVA assertions, UVM bus stall, Verilator errors each form their own cluster",
+  "manifest_path": "run_03_mixed_failures/manifest.json",
+  "ground_truth_clusters": [
+    {
+      "label": "sva_grant_violation",
+      "description": "SVA assertion prop_grant_valid failed — same property in both tests",
+      "member_test_names": ["test_sva_a", "test_sva_b"]
+    },
+    {
+      "label": "uvm_bus_stall",
+      "description": "UVM bus driver stall — same driver bug across two tests",
+      "member_test_names": ["test_uvm_a", "test_uvm_b"]
+    },
+    {
+      "label": "verilator_missing_task",
+      "description": "Verilator %Error — missing task definition in both elaboration runs",
+      "member_test_names": ["test_verilator_a", "test_verilator_b"]
+    }
+  ]
+}

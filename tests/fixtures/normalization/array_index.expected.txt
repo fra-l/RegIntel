@@ -1,0 +1,1 @@
+UVM_ERROR @ <TIME>: [MEM] Access to mem_array[<N>] out of bounds, size=<n>

@@ -1,0 +1,3 @@
+UVM_INFO @ 100ns: uvm_test_top [TOP] Starting simulation
+UVM_ERROR scoreboard.sv(89) @ 12345ns: uvm_test_top.env.axi_sb [SCB] MISMATCH in queue payload_q
+UVM_INFO @ 12346ns: uvm_test_top [TOP] Simulation ending
