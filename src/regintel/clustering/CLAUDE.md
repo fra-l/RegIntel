@@ -14,7 +14,11 @@ Each tier takes the output of the previous tier as input. Tiers 2 and 3 **merge 
 
 Expect 70–85% of real failures to cluster correctly here via pure `signature_id` groupby. If Tier 1 performance is poor, the fix is upstream: normalization rules or extractor structural keys. Do not reach into Tiers 2/3 until Tier 1 is pulling its weight.
 
-`cluster_id` for Tier 1 clusters equals `signature_id`. For Tier 2/3 merged clusters, it is a hash of sorted member `occurrence_id`s.
+`cluster_id` for Tier 1 clusters equals `signature_id`. For Tier 2/3 merged clusters, it is a `stable_hash` of sorted member `occurrence_id`s, computed in `clustering/_helpers.py`.
+
+## Shared helpers (`_helpers.py`)
+
+`common_location(failures)` and `merge_clusters(clusters, failures_by_id, method, tier, confidence)` are shared by Tier 2 and Tier 3 to avoid duplication. `merge_clusters` produces the deterministic merged cluster ID and picks the lex-smallest `occurrence_id` as representative.
 
 ## Determinism requirements
 

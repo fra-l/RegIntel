@@ -39,5 +39,6 @@ Every `build_failure` implementation must:
 2. Normalize **the primary line** (not the full block text, unless the extractor has a specific reason).
 3. Call `compute_signature(normalized, file, line, severity, extractor_keys)`.
 4. Call `compute_occurrence_id(run_id, test_name, seed, log_path, log_line, raw_message)` with `raw_message` (not normalized).
-5. Sort `extractor_keys` before storing: `tuple(sorted(extractor_keys))`.
-6. Wrap extractor-specific extras in `MappingProxyType({...})` for `raw_fields`.
+5. Call `context_lines(log_lines, block.primary_line_no)` from `base.py` to populate `context_before` / `context_after`.
+6. Sort `extractor_keys` before storing: `tuple(sorted(extractor_keys))`.
+7. Wrap extractor-specific extras in `MappingProxyType({...})` for `raw_fields`.

@@ -22,10 +22,11 @@ tests/fixtures/
   normalization/          — *.input.txt / *.expected.txt pairs for the rule engine
   signature_stability/    — groups of variants that MUST produce the same signature
   signature_separation/   — groups of variants that MUST produce DIFFERENT signatures
-  logs/verilator/         — raw logs + expected.json per extraction scenario
+  logs/verilator/         — raw logs per extraction scenario
   manifests/              — manifest.json files for integration tests
-  reports/                — known AnalysisReport inputs for reporter snapshot tests
 ```
+
+Reporter tests (`tests/unit/test_reporting/`) use in-memory `AnalysisReport` fixtures defined in their `conftest.py` rather than file-based golden fixtures. Add file-based golden fixtures there only if the in-memory approach becomes unwieldy.
 
 ## Determinism tests
 
@@ -47,12 +48,14 @@ A stray `set()` or unsorted dict iteration shows up here.
 
 ## Evaluation harness gate
 
-MVP ships only when `pytest -m evaluation` reports:
+`pytest -m evaluation` must report:
 - Pairwise F1 ≥ 0.8
 - Weighted cluster purity ≥ 0.8
 - Weighted cluster completeness ≥ 0.8
 
-If metrics are below the gate, the fix is in normalization or extractor keys — not in clustering thresholds. Tune thresholds only after upstream layers are correct.
+**Current baseline (0.1.0): F1 = 1.000, purity = 1.000, completeness = 1.000** on 16 labeled failures across 3 runs. Update this line when the corpus grows.
+
+If metrics fall below the gate, the fix is almost always in normalization or extractor keys — not in clustering thresholds. Tune thresholds only after upstream layers are correct.
 
 ## Parametrize aggressively
 
